@@ -1,0 +1,14 @@
+<ul>
+    {% for product in products %}
+        <li>
+            {{ product.name }} <br/>
+            <ul>
+                {% for property in product.productProperties %}
+                    <li>{{ property.name }} : {{ property.value }}</li>
+                {% endfor %}
+            </ul>
+            <br/>
+        </li>
+
+    {% endfor %}
+</ul>

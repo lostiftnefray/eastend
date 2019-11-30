@@ -19,18 +19,18 @@ class Product
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Prop", mappedBy="product_id", orphanRemoval=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductProperty", mappedBy="id_product")
      */
-    private $props;
+    private $productProperties;
 
     public function __construct()
     {
-        $this->props = new ArrayCollection();
+        $this->productProperties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,30 +51,30 @@ class Product
     }
 
     /**
-     * @return Collection|Prop[]
+     * @return Collection|ProductProperty[]
      */
-    public function getProps(): Collection
+    public function getProductProperties(): Collection
     {
-        return $this->props;
+        return $this->productProperties;
     }
 
-    public function addProp(Prop $prop): self
+    public function addProductProperty(ProductProperty $productProperty): self
     {
-        if (!$this->props->contains($prop)) {
-            $this->props[] = $prop;
-            $prop->setProductId($this);
+        if (!$this->productProperties->contains($productProperty)) {
+            $this->productProperties[] = $productProperty;
+            $productProperty->setIdProduct($this);
         }
 
         return $this;
     }
 
-    public function removeProp(Prop $prop): self
+    public function removeProductProperty(ProductProperty $productProperty): self
     {
-        if ($this->props->contains($prop)) {
-            $this->props->removeElement($prop);
+        if ($this->productProperties->contains($productProperty)) {
+            $this->productProperties->removeElement($productProperty);
             // set the owning side to null (unless already changed)
-            if ($prop->getProductId() === $this) {
-                $prop->setProductId(null);
+            if ($productProperty->getIdProduct() === $this) {
+                $productProperty->setIdProduct(null);
             }
         }
 
